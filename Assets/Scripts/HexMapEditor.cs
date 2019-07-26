@@ -33,4 +33,9 @@ public class HexMapEditor : MonoBehaviour {
 	public void SelectColor (int index) {
 		activeColor = colors[index];
 	}
+
+    public Color RandomColor()
+    {
+        return colors[Random.Range(0, 4)];
+    }
 }

@@ -962,7 +962,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214923523}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -1270,6 +1270,7 @@ MonoBehaviour:
   width: 6
   height: 6
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  mapEditor: {fileID: 2142000451}
   cellPrefab: {fileID: 11422220, guid: 94c2312396697489abc866a188f80152, type: 3}
   cellLabelPrefab: {fileID: 11470134, guid: f68794ca03b6f4510b9a5bd6ee9ba2f4, type: 3}
 --- !u!4 &1571186512
