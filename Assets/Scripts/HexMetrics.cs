@@ -2,10 +2,13 @@
 
 public static class HexMetrics {
 
-	public const float outerRadius = 10f;
+    #region Radii and Corners
+
+    public const float outerRadius = 10f;
 	public const float innerRadius = outerRadius * 0.866025404f;
 
-	static Vector3[] corners = {
+	static Vector3[] corners =
+    {
         new Vector3(-0.5f * outerRadius, 0f, innerRadius),
         new Vector3(0.5f * outerRadius, 0f, innerRadius),
         new Vector3(outerRadius, 0f, 0f),
@@ -25,6 +28,10 @@ public static class HexMetrics {
         return corners[(int)direction + 1];
     }
 
+    #endregion
+
+    #region Edges
+
     public const float solidFactor = 0.8f;
     public const float blendFactor = 1f - solidFactor;
 
@@ -42,4 +49,48 @@ public static class HexMetrics {
     {
         return (corners[(int)direction] + corners[(int)direction + 1]) * blendFactor;
     }
+
+    #endregion
+
+    #region Elevation
+
+    public const float elevationStep = 5f;
+    public const int terracesPerSlope = 2;
+    public const int terraceSteps = terracesPerSlope * 2 + 1;
+    public const float horizontalTerraceStepSize = 1f / terraceSteps;
+    public const float verticalTerraceStepSize = 1f / (terracesPerSlope + 1);
+
+    public static Vector3 TerraceLerp(Vector3 a, Vector3 b, int step)
+    {
+        float h = step * HexMetrics.horizontalTerraceStepSize;
+        a.x += (b.x - a.x) * h;
+        a.z += (b.z - a.z) * h;
+        float v = ((step + 1) / 2) * HexMetrics.verticalTerraceStepSize;
+        a.y += (b.y - a.y) * v;
+        return a;
+    }
+
+    public static Color TerraceLerp(Color a, Color b, int step)
+    {
+        float h = step * HexMetrics.horizontalTerraceStepSize;
+        return Color.Lerp(a, b, h);
+    }
+
+    public static HexEdgeType GetEdgeType(int elevation1, int elevation2)
+    {
+        if (elevation1 == elevation2)
+        {
+            return HexEdgeType.Flat;
+        }
+
+        int delta = elevation2 - elevation1;
+        if (delta == 1 || delta == -1)
+        {
+            return HexEdgeType.Slope;
+        }
+
+        return HexEdgeType.Cliff;
+    }
+
+    #endregion
 }
